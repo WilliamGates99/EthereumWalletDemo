@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,8 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+val properties = gradleLocalProperties(rootDir)
+
 android {
     namespace = "com.xeniac.ethereumwalletdemo"
     compileSdk = 34
@@ -14,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.xeniac.ethereumwalletdemo"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
@@ -24,7 +28,22 @@ android {
          */
         resourceConfigurations.addAll(listOf("en-rUS"))
 
+        buildConfigField(
+            "String",
+            "INFURA_SERVICE_URL",
+            properties.getProperty("INFURA_SERVICE_URL")
+        )
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/database_schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
 
         vectorDrawables {
             useSupportLibrary = true
@@ -49,6 +68,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -105,8 +125,11 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // Preferences DataStore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    // Room Library
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2") // Kotlin Extensions and Coroutines support for Room
+    ksp("androidx.room:room-compiler:2.5.2")
 
     // Timber Library
     implementation("com.jakewharton.timber:timber:5.0.1")
