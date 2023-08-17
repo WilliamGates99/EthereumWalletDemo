@@ -2,4 +2,8 @@
 
     <string name="app_name">Ethereum Wallet Demo</string>
 
+
+    <string name="textfield_content_description_password_toggle_hide">Hide Password</string>
+    <string name="textfield_content_description_password_toggle_show">Show Password</string>
+
 </resources>
