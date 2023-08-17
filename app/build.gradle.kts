@@ -77,10 +77,9 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Jetpack Compose
-    implementation(platform("androidx.compose:compose-bom:2023.06.01"))
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3") // Material Design 3
-    implementation("androidx.compose.material:material") // Material Design 2
     implementation("androidx.compose.runtime:runtime-livedata") // Compose Integration with LiveData
     implementation("androidx.activity:activity-compose:1.7.2") // Compose Integration with Activities
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0") // Compose Navigation Integration with Hilt
@@ -91,7 +90,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     // Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.7.0")
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.47")
@@ -112,6 +111,9 @@ dependencies {
     // Timber Library
     implementation("com.jakewharton.timber:timber:5.0.1")
 
+    // Web3j Library
+    implementation("org.web3j:core:5.0.0")
+
     // Local Unit Test Libraries
     testImplementation("com.google.truth:truth:1.1.5")
     testImplementation("junit:junit:4.13.2")
@@ -122,7 +124,7 @@ dependencies {
     // Instrumentation Test Libraries
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
