@@ -44,6 +44,7 @@ fun CustomOutlinedTextField(
     imeAction: ImeAction,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isReadOnly: Boolean = false,
     supportingText: String? = null,
     isPasswordTextField: Boolean = false,
     maxLines: Int = 1,
@@ -80,6 +81,7 @@ fun CustomOutlinedTextField(
             onValueChange = { newValue ->
                 onValueChange(newValue)
             },
+            readOnly = isReadOnly,
             isError = hasError,
             singleLine = isSingleLine,
             maxLines = maxLines,
