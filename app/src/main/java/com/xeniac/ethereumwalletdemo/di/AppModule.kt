@@ -30,9 +30,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideEthWalletsDao(
-        database: EthWalletsDatabase
-    ) = database.dao()
+    fun provideEthWalletsDao(database: EthWalletsDatabase) = database.dao()
 
     @Singleton
     @Provides
