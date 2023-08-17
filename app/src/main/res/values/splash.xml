@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.EthereumWalletDemo.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#3DDC84</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.EthereumWalletDemo</item>
+        <item name="android:windowSplashScreenBehavior" tools:targetApi="tiramisu">
+            icon_preferred
+        </item>
+    </style>
+
+</resources>

@@ -1,0 +1,7 @@
+/build
+/release
+/prod
+/dev
+/obfuscation
+/src/main/dbschemas
+google-services.json
