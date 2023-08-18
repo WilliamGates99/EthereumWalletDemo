@@ -27,7 +27,7 @@ fun CustomBigButton(
     onClick: () -> Unit
 ) {
     Button(
-        enabled = !isLoading || isEnabled,
+        enabled = !isLoading && isEnabled,
         onClick = onClick,
         contentPadding = PaddingValues(
             horizontal = horizontalPadding,
