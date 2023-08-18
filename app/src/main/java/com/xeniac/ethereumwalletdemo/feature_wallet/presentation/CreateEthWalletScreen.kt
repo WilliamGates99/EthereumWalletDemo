@@ -90,7 +90,7 @@ fun CreateEthWalletScreen(
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = event.message.asString(context),
                         actionLabel = context.getString(R.string.error_btn_retry),
-                        duration = SnackbarDuration.Indefinite
+                        duration = SnackbarDuration.Long
                     )
 
                     when (snackbarResult) {
@@ -118,7 +118,7 @@ fun CreateEthWalletScreen(
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = event.message.asString(context),
                         actionLabel = context.getString(R.string.error_btn_retry),
-                        duration = SnackbarDuration.Indefinite
+                        duration = SnackbarDuration.Long
                     )
 
                     when (snackbarResult) {
