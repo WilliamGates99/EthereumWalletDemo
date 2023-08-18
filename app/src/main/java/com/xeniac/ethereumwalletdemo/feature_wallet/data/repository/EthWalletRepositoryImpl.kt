@@ -5,39 +5,14 @@ import com.xeniac.ethereumwalletdemo.core.util.UiText
 import com.xeniac.ethereumwalletdemo.feature_wallet.data.local.EthWalletDao
 import com.xeniac.ethereumwalletdemo.feature_wallet.domain.models.EthWalletInfo
 import com.xeniac.ethereumwalletdemo.feature_wallet.domain.repository.EthWalletRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.web3j.crypto.WalletUtils
-import org.web3j.protocol.Web3j
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 class EthWalletRepositoryImpl @Inject constructor(
-    private val ethWalletDao: EthWalletDao,
-    private val web3jService: Web3j
+    private val ethWalletDao: EthWalletDao
 ) : EthWalletRepository {
-
-    override suspend fun connectToEthBlockchain(): Resource<Nothing> {
-        return try {
-            val web3ClientVersion = withContext(Dispatchers.IO) {
-                web3jService.web3ClientVersion().sendAsync().get()
-            }
-
-            if (web3ClientVersion.hasError()) {
-                val errorMessage = web3ClientVersion.error.message
-                Timber.e("Connect to Ethereum blockchain failed: $errorMessage")
-                Resource.Error(UiText.DynamicString(errorMessage))
-            } else {
-                Timber.i("Successfully connected to Ethereum blockchain.")
-                Resource.Success()
-            }
-        } catch (e: Exception) {
-            val errorMessage = e.message.toString()
-            Timber.e("Connect to Ethereum blockchain failed: $errorMessage")
-            Resource.Error(UiText.DynamicString(errorMessage))
-        }
-    }
 
     override suspend fun createOfflineEthWallet(
         password: String,

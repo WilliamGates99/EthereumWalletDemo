@@ -38,23 +38,17 @@ class CreateEthWalletViewModel @Inject constructor(
     private val _privateKey = MutableStateFlow(CustomTextFieldState())
     val privateKey = _privateKey.asStateFlow()
 
-    private val _isConnectToEthBlockchainLoading = MutableStateFlow(false)
-    val isConnectToEthBlockchainLoading = _isConnectToEthBlockchainLoading.asStateFlow()
-
     private val _isCreateOfflineEthWalletLoading = MutableStateFlow(false)
     val isCreateOfflineEthWalletLoading = _isCreateOfflineEthWalletLoading.asStateFlow()
 
     private val _getFirstEthWalletInfoLoading = MutableStateFlow(false)
     val getFirstEthWalletInfoLoading = _getFirstEthWalletInfoLoading.asStateFlow()
 
-    private val _connectToEthBlockchainEventChannel = Channel<UiEvent>()
-    val connectToEthBlockchainEventChannel = _connectToEthBlockchainEventChannel.receiveAsFlow()
-
     private val _createOfflineEthWalletEventChannel = Channel<UiEvent>()
     val createOfflineEthWalletEventChannel = _createOfflineEthWalletEventChannel.receiveAsFlow()
 
     init {
-        onEvent(CreateEthWalletEvent.ConnectToEthBlockchain(ConnectivityObserver.Status.AVAILABLE))
+        onEvent(CreateEthWalletEvent.GetFirstEthWalletInfo)
     }
 
     fun onEvent(event: CreateEthWalletEvent) {
@@ -74,38 +68,10 @@ class CreateEthWalletViewModel @Inject constructor(
                     )
                 }
             }
-            is CreateEthWalletEvent.ConnectToEthBlockchain -> connectToEthBlockchain(event.networkStatus)
             is CreateEthWalletEvent.GenerateEthWallet -> createOfflineEthWallet(
                 event.networkStatus, event.walletFileDir
             )
             is CreateEthWalletEvent.GetFirstEthWalletInfo -> getFirstEthWalletInfo()
-        }
-    }
-
-    private fun connectToEthBlockchain(
-        networkStatus: ConnectivityObserver.Status
-    ) = viewModelScope.launch {
-        if (networkStatus == ConnectivityObserver.Status.AVAILABLE) {
-            _isConnectToEthBlockchainLoading.value = true
-
-            when (val result = ethWalletRepository.connectToEthBlockchain()) {
-                is Resource.Success -> {
-                    _connectToEthBlockchainEventChannel.send(UiEvent.GetEthWalletInfo)
-                    _isConnectToEthBlockchainLoading.value = false
-                }
-                is Resource.Error -> {
-                    result.message?.let { message ->
-                        _connectToEthBlockchainEventChannel.send(UiEvent.ShowSnackbar(message))
-                    }
-                    _isConnectToEthBlockchainLoading.value = false
-                }
-            }
-        } else {
-            _connectToEthBlockchainEventChannel.send(
-                UiEvent.ShowSnackbar(
-                    UiText.StringResource(R.string.error_network_connection_unavailable)
-                )
-            )
         }
     }
 
@@ -114,7 +80,7 @@ class CreateEthWalletViewModel @Inject constructor(
         walletFileDir: String
     ) = viewModelScope.launch {
         if (networkStatus == ConnectivityObserver.Status.AVAILABLE) {
-            _isConnectToEthBlockchainLoading.value = true
+            _isCreateOfflineEthWalletLoading.value = true
 
             val createEthWalletResult = createEthWalletUseCase(
                 password = password.value.text,
@@ -144,16 +110,16 @@ class CreateEthWalletViewModel @Inject constructor(
             when (createEthWalletResult.result) {
                 is Resource.Success -> {
                     _createOfflineEthWalletEventChannel.send(UiEvent.GetEthWalletInfo)
-                    _isConnectToEthBlockchainLoading.value = false
+                    _isCreateOfflineEthWalletLoading.value = false
                 }
                 is Resource.Error -> {
                     createEthWalletResult.result.message?.let { message ->
                         _createOfflineEthWalletEventChannel.send(UiEvent.ShowSnackbar(message))
                     }
-                    _isConnectToEthBlockchainLoading.value = false
+                    _isCreateOfflineEthWalletLoading.value = false
                 }
                 null -> {
-                    _isConnectToEthBlockchainLoading.value = false
+                    _isCreateOfflineEthWalletLoading.value = false
                 }
             }
         } else {

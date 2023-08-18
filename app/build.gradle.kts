@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.xeniac.ethereumwalletdemo"
-        minSdk = 24
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
@@ -27,12 +27,6 @@ android {
         Keeps language resources for only the locales specified below.
          */
         resourceConfigurations.addAll(listOf("en-rUS"))
-
-        buildConfigField(
-            "String",
-            "INFURA_SERVICE_URL",
-            properties.getProperty("INFURA_SERVICE_URL")
-        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

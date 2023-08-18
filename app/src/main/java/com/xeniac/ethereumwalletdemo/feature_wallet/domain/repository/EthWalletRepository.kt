@@ -5,8 +5,6 @@ import com.xeniac.ethereumwalletdemo.feature_wallet.domain.models.EthWalletInfo
 
 interface EthWalletRepository {
 
-    suspend fun connectToEthBlockchain(): Resource<Nothing>
-
     suspend fun createOfflineEthWallet(
         password: String,
         walletFileDir: String

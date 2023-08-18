@@ -5,10 +5,6 @@ import com.xeniac.ethereumwalletdemo.core.domain.repository.ConnectivityObserver
 sealed class CreateEthWalletEvent {
     data class PasswordChanged(val password: String) : CreateEthWalletEvent()
 
-    data class ConnectToEthBlockchain(
-        val networkStatus: ConnectivityObserver.Status
-    ) : CreateEthWalletEvent()
-
     data class GenerateEthWallet(
         val networkStatus: ConnectivityObserver.Status,
         val walletFileDir: String

@@ -1,5 +1,6 @@
 package com.xeniac.ethereumwalletdemo.feature_wallet.presentation
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -63,49 +64,23 @@ fun CreateEthWalletScreen(
     val walletAddressState by viewModel.walletAddress.collectAsStateWithLifecycle()
     val privateKeyState by viewModel.privateKey.collectAsStateWithLifecycle()
 
-    val isConnectToEthBlockchainLoading by viewModel.isConnectToEthBlockchainLoading.collectAsStateWithLifecycle()
     val isCreateOfflineEthWalletLoading by viewModel.isCreateOfflineEthWalletLoading.collectAsStateWithLifecycle()
     val getFirstEthWalletInfoLoading by viewModel.getFirstEthWalletInfoLoading.collectAsStateWithLifecycle()
 
-    val isRegenerateBtnLoading = isConnectToEthBlockchainLoading ||
-            isCreateOfflineEthWalletLoading || getFirstEthWalletInfoLoading
+    val isRegenerateBtnLoading = isCreateOfflineEthWalletLoading || getFirstEthWalletInfoLoading
     val isSignMessageBtnEnabled = privateKeyState.text.isNotBlank()
 
     val connectivityObserver by remember { mutableStateOf(NetworkConnectivityObserver(context)) }
     var networkStatus by remember { mutableStateOf(ConnectivityObserver.Status.UNAVAILABLE) }
 
-    LaunchedEffect(key1 = context) {
-        connectivityObserver.observe().onEach { status ->
-            networkStatus = status
-        }.launchIn(this)
-    }
-
-    LaunchedEffect(key1 = context) {
-        viewModel.connectToEthBlockchainEventChannel.collectLatest { event ->
-            when (event) {
-                is UiEvent.GetEthWalletInfo -> {
-                    viewModel.onEvent(CreateEthWalletEvent.GetFirstEthWalletInfo)
-                }
-                is UiEvent.ShowSnackbar -> {
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = event.message.asString(context),
-                        actionLabel = context.getString(R.string.error_btn_retry),
-                        duration = SnackbarDuration.Long
-                    )
-
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            viewModel.onEvent(
-                                CreateEthWalletEvent.ConnectToEthBlockchain(networkStatus)
-                            )
-                        }
-                        SnackbarResult.Dismissed -> {
-                            /* NO-OP */
-                        }
-                    }
-                }
-            }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        LaunchedEffect(key1 = context) {
+            connectivityObserver.observe().onEach { status ->
+                networkStatus = status
+            }.launchIn(this)
         }
+    } else {
+        networkStatus = ConnectivityObserver.Status.AVAILABLE
     }
 
     LaunchedEffect(key1 = context) {
