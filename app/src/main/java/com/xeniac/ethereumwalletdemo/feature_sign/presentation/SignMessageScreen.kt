@@ -144,6 +144,7 @@ fun SignMessageScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CustomBigButton(
+                    modifier = Modifier.weight(0.5f),
                     btnText = stringResource(id = R.string.sign_message_btn_sign_message),
                     isLoading = isSignMessageLoading,
                     onClick = {
@@ -151,9 +152,10 @@ fun SignMessageScreen(
                     }
                 )
 
-                Spacer(Modifier.width(4.dp))
+                Spacer(Modifier.width(16.dp))
 
                 CustomBigButton(
+                    modifier = Modifier.weight(0.5f),
                     btnText = stringResource(id = R.string.sign_message_btn_return),
                     isLoading = false,
                     onClick = onNavigateUp

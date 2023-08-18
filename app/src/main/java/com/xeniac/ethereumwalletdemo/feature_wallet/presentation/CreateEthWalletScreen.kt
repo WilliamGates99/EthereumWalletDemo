@@ -207,6 +207,7 @@ fun CreateEthWalletScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CustomBigButton(
+                    modifier = Modifier.weight(0.5f),
                     btnText = stringResource(id = R.string.create_eth_wallet_btn_regenerate),
                     isLoading = isRegenerateBtnLoading,
                     onClick = {
@@ -219,9 +220,10 @@ fun CreateEthWalletScreen(
                     }
                 )
 
-                Spacer(Modifier.width(4.dp))
+                Spacer(Modifier.width(16.dp))
 
                 CustomBigButton(
+                    modifier = Modifier.weight(0.5f),
                     btnText = stringResource(id = R.string.create_eth_wallet_btn_sign_message),
                     isLoading = false,
                     isEnabled = isSignMessageBtnEnabled,
