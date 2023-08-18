@@ -19,6 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -86,16 +87,24 @@ fun CreateEthWalletScreen(
                     viewModel.onEvent(CreateEthWalletEvent.GetFirstEthWalletInfo)
                 }
                 is UiEvent.ShowSnackbar -> {
-                    snackbarHostState.showSnackbar(
+                    val snackbarResult = snackbarHostState.showSnackbar(
                         message = event.message.asString(context),
-                        duration = SnackbarDuration.Long
+                        duration = SnackbarDuration.Long,
+                        actionLabel = context.getString(R.string.error_btn_retry)
                     )
-                }
-                else -> {
-                    /* NO-OP */
+
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            viewModel.onEvent(
+                                CreateEthWalletEvent.ConnectToEthBlockchain(networkStatus)
+                            )
+                        }
+                        SnackbarResult.Dismissed -> {
+                            /* NO-OP */
+                        }
+                    }
                 }
             }
-
         }
     }
 
@@ -106,13 +115,24 @@ fun CreateEthWalletScreen(
                     viewModel.onEvent(CreateEthWalletEvent.GetFirstEthWalletInfo)
                 }
                 is UiEvent.ShowSnackbar -> {
-                    snackbarHostState.showSnackbar(
+                    val snackbarResult = snackbarHostState.showSnackbar(
                         message = event.message.asString(context),
                         duration = SnackbarDuration.Long
                     )
-                }
-                else -> {
-                    /* NO-OP */
+
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            viewModel.onEvent(
+                                CreateEthWalletEvent.GenerateEthWallet(
+                                    networkStatus = networkStatus,
+                                    walletFileDir = walletFileDir
+                                )
+                            )
+                        }
+                        SnackbarResult.Dismissed -> {
+                            /* NO-OP */
+                        }
+                    }
                 }
             }
         }
