@@ -6,8 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.xeniac.ethereumwalletdemo.feature_sign.presentation.SignMessageScreen
 import com.xeniac.ethereumwalletdemo.feature_wallet.presentation.CreateEthWalletScreen
 
@@ -23,14 +25,29 @@ fun SetupRootNavGraph(
     ) {
         composable(route = Screen.CreateEthWalletScreen.route) {
             CreateEthWalletScreen(
-                onSignMessageNavigate = {
-                    navController.navigate(Screen.SignMessageScreen.route)
+                onSignMessageNavigate = { privateKey ->
+                    navController.navigate(Screen.SignMessageScreen.withArgs(privateKey))
                 }
             )
         }
 
-        composable(route = Screen.SignMessageScreen.route) {
-            SignMessageScreen(onNavigateUp = navController::navigateUp)
+        composable(
+            route = Screen.SignMessageScreen.route + "/{$SIGN_MESSAGE_ARGUMENT_PRIVATE_KEY_KEY}",
+            arguments = listOf(
+                navArgument(name = SIGN_MESSAGE_ARGUMENT_PRIVATE_KEY_KEY) {
+                    type = NavType.StringType
+                    nullable = false
+                }
+            )
+        ) { backStackEntry ->
+            val privateKey = backStackEntry.arguments?.getString(
+                SIGN_MESSAGE_ARGUMENT_PRIVATE_KEY_KEY
+            ) ?: ""
+
+            SignMessageScreen(
+                privateKey = privateKey,
+                onNavigateUp = navController::navigateUp
+            )
         }
     }
 }
