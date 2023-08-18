@@ -8,7 +8,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.xeniac.ethereumwalletdemo.feature_wallet.presentation.CreateWalletScreen
+import com.xeniac.ethereumwalletdemo.feature_sign.presentation.SignMessageScreen
+import com.xeniac.ethereumwalletdemo.feature_wallet.presentation.CreateEthWalletScreen
 
 @Composable
 fun SetupRootNavGraph(
@@ -20,8 +21,16 @@ fun SetupRootNavGraph(
         startDestination = startDestination,
         route = NavGraphs.ROOT_ROUTE
     ) {
-        composable(route = Screen.CreateWalletScreen.route) {
-            CreateWalletScreen(navController = navController)
+        composable(route = Screen.CreateEthWalletScreen.route) {
+            CreateEthWalletScreen(
+                onSignMessageNavigate = {
+                    navController.navigate(Screen.SignMessageScreen.route)
+                }
+            )
+        }
+
+        composable(route = Screen.SignMessageScreen.route) {
+            SignMessageScreen(onNavigateUp = navController::navigateUp)
         }
     }
 }

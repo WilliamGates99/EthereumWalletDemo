@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     val navController = rememberNavController()
                     SetupRootNavGraph(
                         navController = navController,
-                        startDestination = Screen.CreateWalletScreen.route
+                        startDestination = Screen.CreateEthWalletScreen.route
                     )
                 }
             }
