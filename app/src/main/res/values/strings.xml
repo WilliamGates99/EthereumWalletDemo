@@ -28,4 +28,13 @@
     <string name="create_eth_wallet_btn_regenerate">Re-Generate</string>
     <string name="create_eth_wallet_btn_sign_message">Sign a Message</string>
 
+
+    <string name="sign_message_textfield_title_message">Message</string>
+    <string name="sign_message_textfield_title_private_key">Private Key</string>
+    <string name="sign_message_textfield_title_signed_message">Signed Message</string>
+    <string name="sign_message_textfield_hint_message_blank">Enter a message.</string>
+    <string name="sign_message_textfield_error_message_blank">Please enter a message.</string>
+    <string name="sign_message_btn_sign_message">Sign</string>
+    <string name="sign_message_btn_return">Return</string>
+
 </resources>
