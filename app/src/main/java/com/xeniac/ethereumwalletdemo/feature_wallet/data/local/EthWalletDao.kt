@@ -15,5 +15,5 @@ interface EthWalletDao {
     suspend fun deleteAllEthWallets()
 
     @Query("SELECT * FROM eth_wallets LIMIT 1")
-    fun getFirstEthWalletInfo(): EthWalletInfoDto
+    suspend fun getFirstEthWalletInfo(): EthWalletInfoDto
 }
