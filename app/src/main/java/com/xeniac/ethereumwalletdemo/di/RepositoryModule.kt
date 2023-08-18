@@ -1,5 +1,7 @@
 package com.xeniac.ethereumwalletdemo.di
 
+import com.xeniac.ethereumwalletdemo.feature_sign.data.repository.SignMessageRepositoryImpl
+import com.xeniac.ethereumwalletdemo.feature_sign.domain.repository.SignMessageRepository
 import com.xeniac.ethereumwalletdemo.feature_wallet.data.repository.EthWalletRepositoryImpl
 import com.xeniac.ethereumwalletdemo.feature_wallet.domain.repository.EthWalletRepository
 import dagger.Binds
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindEthWalletRepository(
         ethWalletRepository: EthWalletRepositoryImpl
     ): EthWalletRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSignMessageRepository(
+        signMessageRepository: SignMessageRepositoryImpl
+    ): SignMessageRepository
 }
