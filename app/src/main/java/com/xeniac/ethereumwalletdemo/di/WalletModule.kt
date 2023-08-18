@@ -15,7 +15,7 @@ class WalletModule {
 
     @Singleton
     @Provides
-    fun provideValidateUsername(): ValidatePassword = ValidatePassword()
+    fun provideValidatePassword(): ValidatePassword = ValidatePassword()
 
     @Singleton
     @Provides
