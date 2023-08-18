@@ -1,5 +1,6 @@
 package com.xeniac.ethereumwalletdemo.core.ui.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,7 +50,7 @@ fun CustomOutlinedTextField(
     isPasswordTextField: Boolean = false,
     maxLines: Int = 1,
     shape: Shape = RoundedCornerShape(12.dp),
-    titleColor: Color = Color.Black,
+    titleColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black,
     leadingIcon: Painter? = null,
     leadingIconContentDescription: String? = null,
     keyboardCapitalization: KeyboardCapitalization = KeyboardCapitalization.None,
