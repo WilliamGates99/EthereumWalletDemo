@@ -3,7 +3,29 @@
     <string name="app_name">Ethereum Wallet Demo</string>
 
 
+    <string name="error_something_went_wrong">Something went wrong. Please try again later.</string>
+    <string name="error_network_connection_unavailable">Unable to connect to the internet.</string>
+    <string name="error_network_failure">You\'re having network issues. Please try again later.</string>
+    <string name="error_btn_retry">Retry</string>
+    <string name="error_btn_confirm">Confirm</string>
+
+
     <string name="textfield_content_description_password_toggle_hide">Hide Password</string>
     <string name="textfield_content_description_password_toggle_show">Show Password</string>
+
+
+    <string name="btn_loading_text">Please Wait</string>
+
+
+    <string name="create_eth_wallet_textfield_title_password">Password</string>
+    <string name="create_eth_wallet_textfield_title_mnemonic">Mnemonic Phrase</string>
+    <string name="create_eth_wallet_textfield_title_wallet_address">Wallet Address</string>
+    <string name="create_eth_wallet_textfield_title_private_key">Private Key</string>
+    <string name="create_eth_wallet_textfield_hint_password">Enter your password</string>
+    <string name="create_eth_wallet_textfield_error_password_blank">Please enter your password.</string>
+    <string name="create_eth_wallet_textfield_error_password_short">Password length should be at least 8 characters.</string>
+    <string name="create_eth_wallet_textfield_error_password_invalid">Password must contain at least 1 digit and 1 letter.</string>
+    <string name="create_eth_wallet_btn_regenerate">Re-Generate</string>
+    <string name="create_eth_wallet_btn_sign_message">Sign a Message</string>
 
 </resources>
