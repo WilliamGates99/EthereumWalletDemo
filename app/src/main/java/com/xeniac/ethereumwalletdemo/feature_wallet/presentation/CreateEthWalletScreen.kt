@@ -50,7 +50,7 @@ import kotlinx.coroutines.flow.onEach
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CreateEthWalletScreen(
-    onSignMessageNavigate: () -> Unit,
+    onSignMessageNavigate: (String) -> Unit,
     viewModel: CreateEthWalletViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -146,6 +146,14 @@ fun CreateEthWalletScreen(
                 imeAction = ImeAction.Done,
                 onValueChange = { newPassword ->
                     viewModel.onEvent(CreateEthWalletEvent.PasswordChanged(newPassword.trim()))
+                },
+                keyboardAction = {
+                    viewModel.onEvent(
+                        CreateEthWalletEvent.GenerateEthWallet(
+                            networkStatus = networkStatus,
+                            walletFileDir = walletFileDir
+                        )
+                    )
                 }
             )
 
@@ -159,7 +167,7 @@ fun CreateEthWalletScreen(
                 hint = "",
                 errorText = mnemonicPhraseState.errorText?.asString(),
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.None,
                 onValueChange = { /* NO-OP */ }
             )
 
@@ -167,13 +175,13 @@ fun CreateEthWalletScreen(
 
             CustomOutlinedTextField(
                 isReadOnly = true,
-                maxLines = 2,
+                maxLines = 3,
                 value = walletAddressState.text,
                 title = stringResource(id = R.string.create_eth_wallet_textfield_title_wallet_address),
                 hint = "",
                 errorText = walletAddressState.errorText?.asString(),
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.None,
                 onValueChange = { /* NO-OP */ }
             )
 
@@ -181,13 +189,13 @@ fun CreateEthWalletScreen(
 
             CustomOutlinedTextField(
                 isReadOnly = true,
-                maxLines = 2,
+                maxLines = 3,
                 value = privateKeyState.text,
                 title = stringResource(id = R.string.create_eth_wallet_textfield_title_private_key),
                 hint = "",
                 errorText = privateKeyState.errorText?.asString(),
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.None,
                 onValueChange = { /* NO-OP */ }
             )
 
@@ -217,7 +225,9 @@ fun CreateEthWalletScreen(
                     btnText = stringResource(id = R.string.create_eth_wallet_btn_sign_message),
                     isLoading = false,
                     isEnabled = isSignMessageBtnEnabled,
-                    onClick = onSignMessageNavigate
+                    onClick = {
+                        onSignMessageNavigate(privateKeyState.text)
+                    }
                 )
             }
         }
