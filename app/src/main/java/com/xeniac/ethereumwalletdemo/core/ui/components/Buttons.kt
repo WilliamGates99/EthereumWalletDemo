@@ -19,6 +19,7 @@ fun CustomBigButton(
     btnText: String,
     isLoading: Boolean,
     modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
     loadingText: String = stringResource(id = R.string.btn_loading_text),
     horizontalPadding: Dp = 14.dp,
     verticalPadding: Dp = 14.dp,
@@ -26,7 +27,7 @@ fun CustomBigButton(
     onClick: () -> Unit
 ) {
     Button(
-        enabled = !isLoading,
+        enabled = !isLoading || isEnabled,
         onClick = onClick,
         contentPadding = PaddingValues(
             horizontal = horizontalPadding,
