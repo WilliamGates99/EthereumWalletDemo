@@ -19,6 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -143,6 +145,15 @@ fun SignMessageScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                TextButton(
+                    modifier = Modifier.weight(0.5f),
+                    onClick = onNavigateUp
+                ) {
+                    Text(text = stringResource(id = R.string.sign_message_btn_return))
+                }
+
+                Spacer(Modifier.width(16.dp))
+
                 CustomBigButton(
                     modifier = Modifier.weight(0.5f),
                     btnText = stringResource(id = R.string.sign_message_btn_sign_message),
@@ -150,15 +161,6 @@ fun SignMessageScreen(
                     onClick = {
                         viewModel.onEvent(SignMessageEvent.SignMessageWithPrivateKey(privateKey))
                     }
-                )
-
-                Spacer(Modifier.width(16.dp))
-
-                CustomBigButton(
-                    modifier = Modifier.weight(0.5f),
-                    btnText = stringResource(id = R.string.sign_message_btn_return),
-                    isLoading = false,
-                    onClick = onNavigateUp
                 )
             }
         }
